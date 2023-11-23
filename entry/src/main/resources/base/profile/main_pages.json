@@ -1,0 +1,8 @@
+{
+  "src": [
+    "pages/main/MainPage",
+    "pages/Index",
+    "pages/main/DrawLayout",
+    "pages/main/PersonPage"
+  ]
+}
