@@ -2,32 +2,51 @@ import httpGet from '../utils/HttpUtil'
 @Entry
 @Component
 struct Index {
-  @State message: string = 'Hello World'
-  path: Resource = $r('app.media.home')
+  private arr: number[] = [0, 1, 2, 3]
+  @State isActive: boolean = false
+  @State dex: number = 0
 
   build() {
-    Row() {
-      Column() {
-        Text(this.message)
-          .fontSize(50)
-          .fontWeight(FontWeight.Bold)
+    Column() {
+      Navigation() {
+        List({ space: 12, initialIndex: 0 }) {
+          ForEach(this.arr, (item: number, index: number) => {
+            ListItem() {
+              NavRouter() {
+                Row() {
+                  Image($r('app.media.icon')).width(30).height(30).borderRadius(30).margin({ left: 3, right: 10 })
+                  Text(`NavRouter${item + 1}`)
+                    .fontSize(22)
+                    .fontWeight(500)
+                    .textAlign(TextAlign.Center)
+                }
+                .width(180)
+                .height(72)
+                .backgroundColor(this.dex === index ? '#ccc' : '#fff')
+                .borderRadius(24)
 
-        Image(this.path)
-          .width(24)
-          .height(24)
-          .onClick(ev=>{
-             let url = 'https://www.wanandroid.com/article/list/1/json'
-            // httpGet(url)
-          })
-
-        TextInput({ placeholder: 'search...' })
-          .width('90%')
-          .height(40)
-          .backgroundColor('#FFFFFF')
-          .margin({ top: 8 })
+                NavDestination() {
+                  Text(`我是NavDestination第${item + 1}页内容`).fontSize(50)
+                  Flex({ direction: FlexDirection.Row }) {
+                    Row() {
+                      Image($r('app.media.icon')).width(40).height(40).borderRadius(40).margin({ right: 15 })
+                      Text('今天共有七节课').fontSize(30)
+                    }.padding({ left: 15 })
+                  }
+                }.backgroundColor('#ccc')
+                .title(`NavDestination${item + 1}`)
+              }.onStateChange((isActivated: boolean) => {
+                this.dex = index
+              })
+            }
+          }, item => item)
+        }
+        .height('100%')
+        .margin({ top: 12, left: 12 })
       }
-      .width('100%')
-    }
-    .height('100%')
+      .mode(NavigationMode.Split)
+      .hideTitleBar(true)
+      .hideToolBar(true)
+    }.height('100%')
   }
 }

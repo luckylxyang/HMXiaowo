@@ -3,14 +3,14 @@ import List from '@ohos.util.List'
 import ArrayList from '@ohos.util.ArrayList'
 import Banner from './Banner'
 export default class BannerDataSource implements IDataSource {
-  private list: Banner[] = []
+  private list: Object[] = []
   private listener: DataChangeListener
 
-  constructor(list: Banner[]) {
+  constructor(list: Object[]) {
     this.list = list
   }
 
-  addData(list : Banner[]){
+  addData(list : Object[]){
     this.list.push(...list)
   }
 
@@ -18,7 +18,7 @@ export default class BannerDataSource implements IDataSource {
     return this.list.length
   }
 
-  getData(index: number): Banner {
+  getData(index: number): Object {
     return this.list[index]
   }
 
