@@ -1,7 +1,7 @@
-
 import List from '@ohos.util.List'
 import ArrayList from '@ohos.util.ArrayList'
 import Banner from './Banner'
+
 export default class BannerDataSource implements IDataSource {
   private list: Object[] = []
   private listener: DataChangeListener
@@ -10,7 +10,7 @@ export default class BannerDataSource implements IDataSource {
     this.list = list
   }
 
-  addData(list : Object[]){
+  addData(list: Object[]) {
     this.list.push(...list)
   }
 

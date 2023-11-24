@@ -3,6 +3,7 @@
     "pages/main/MainPage",
     "pages/Index",
     "pages/main/DrawLayout",
-    "pages/main/PersonPage"
+    "pages/main/PersonPage",
+    "pages/DetailPage"
   ]
 }
