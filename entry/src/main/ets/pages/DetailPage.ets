@@ -17,15 +17,6 @@ export default struct DetailPage {
     this.title = params['title']
   }
 
-  jumpToWebTop(){
-    // function scrollToTop() {
-    //   window.scrollTo({
-    //     top: 0,
-    //     behavior: 'smooth'
-    //   });
-    // }
-  }
-
   build() {
     Column() {
       Toolbar({ title: this.title, bgColor: '#ffffff', backOnClick: () => {

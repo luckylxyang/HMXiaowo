@@ -1,20 +1,18 @@
 import { httpPost } from '../../utils/HttpUtil'
 import { Api } from '../net/ApiConstants'
-import Toolbar from '../Toolbar'
-import promptAction from '@ohos.promptAction'
 
-@Entry
 @Component
-@Preview
-export default struct LoginPage {
+@Entry
+export default struct RegisterPage {
   @State loginName: string = ""
   @State password: string = ""
+  @State rePassword: string = ""
   @State clickable: boolean = false
   @State loginBtnBg: Resource = $r('app.color.disable')
 
   @Builder NavigationTitle() {
     Column() {
-      Text($r('app.string.login'))
+      Text($r('app.string.register'))
         .fontColor('#182431')
         .fontSize(20)
         .lineHeight(41)
@@ -44,18 +42,25 @@ export default struct LoginPage {
             this.checkInput()
           })
 
-        Button($r('app.string.login'), {stateEffect : this.clickable}).onClick(ev => {
-          this.login()
-        }).width('100%')
+        TextInput({ placeholder: $r('app.string.re_password_placeholder') })
+          .type(InputType.Password)
+          .height(45)
+          .margin({ top: 20 })
+          .onChange(string => {
+            this.rePassword = string
+            this.checkInput()
+          })
+
+        Button($r('app.string.register', { stateEffect: this.clickable }))
+          .onClick(ev => {
+            this.registerUser()
+          })
+          .width('100%')
           .height(45)
           .touchable(this.clickable)
           .backgroundColor(this.loginBtnBg)
           .margin({ top: 20, bottom: 20 })
 
-        Text($r('app.string.register'))
-          .onClick(ev => {
-
-          })
       }.width('90%')
       .margin({ top: 50 })
     }
@@ -68,17 +73,13 @@ export default struct LoginPage {
    *
    */
   checkInput() {
-    this.clickable = !(this.loginName == "" || this.password == "")
+    this.clickable = !(this.loginName == "" || this.password == "" || this.rePassword == "")
     this.loginBtnBg = this.clickable ? $r('app.color.disable') : $r('app.color.blue')
   }
 
-  login() {
-    let par = {
-      username : this.loginName,
-      password : this.password
-    }
-    httpPost(Api.user.login,par, data => {
-      promptAction.showToast({ message : "登录成功" })
+  registerUser() {
+    httpPost(Api.user.register,{}, data => {
+
     }, error => {
 
     })

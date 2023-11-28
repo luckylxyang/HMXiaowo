@@ -15,6 +15,38 @@
     {
       "name": "reason",
       "value": "网络访问"
+    },
+    {
+      "name": "title",
+      "value": "我的"
+    },
+    {
+      "name": "my_collect",
+      "value": "我的收藏"
+    },
+    {
+      "name": "login",
+      "value": "登录"
+    },
+    {
+      "name": "logOut",
+      "value": "退出登录"
+    },
+    {
+      "name": "register",
+      "value": "注册"
+    },
+    {
+      "name": "login_placeholder",
+      "value": "请输入登录名"
+    },
+    {
+      "name": "password_placeholder",
+      "value": "请输入密码"
+    },
+    {
+      "name": "re_password_placeholder",
+      "value": "请再次输入密码"
     }
   ]
 }

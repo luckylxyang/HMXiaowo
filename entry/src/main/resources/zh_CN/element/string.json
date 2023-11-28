@@ -43,6 +43,10 @@
     {
       "name": "password_placeholder",
       "value": "请输入密码"
+    },
+    {
+      "name": "re_password_placeholder",
+      "value": "请再次输入密码"
     }
   ]
 }

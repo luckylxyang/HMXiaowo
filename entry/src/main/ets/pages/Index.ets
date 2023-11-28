@@ -1,4 +1,4 @@
-import httpGet from '../utils/HttpUtil'
+import { httpGet } from '../utils/HttpUtil'
 @Entry
 @Component
 struct Index {

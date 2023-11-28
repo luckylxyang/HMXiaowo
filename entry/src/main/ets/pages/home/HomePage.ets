@@ -1,5 +1,5 @@
 import BannerDataSource from './BannerDataSource'
-import httpGet from '../../utils/HttpUtil'
+import { httpGet } from '../../utils/HttpUtil'
 import Banner from './Banner'
 import Article from '../Article'
 import { dateFormat } from '../../utils/CommonUtils'

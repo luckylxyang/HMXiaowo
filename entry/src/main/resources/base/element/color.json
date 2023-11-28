@@ -7,6 +7,14 @@
     {
       "name": "tool_bar",
       "value": "#FFFFFF"
+    },
+    {
+      "name": "disable",
+      "value": "#FFA7A4A4"
+    },
+    {
+      "name": "blue",
+      "value": "#5C042358"
     }
   ]
 }
