@@ -49,6 +49,7 @@ export default struct HomePage {
               .alt($r('app.media.home'))
               .width('100%').height('100%')
           }.width('99%').height(160)
+
         }, item => item)
       }
       .cachedCount(2)

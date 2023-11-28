@@ -17,6 +17,15 @@ export default struct DetailPage {
     this.title = params['title']
   }
 
+  jumpToWebTop(){
+    // function scrollToTop() {
+    //   window.scrollTo({
+    //     top: 0,
+    //     behavior: 'smooth'
+    //   });
+    // }
+  }
+
   build() {
     Column() {
       Toolbar({ title: this.title, bgColor: '#ffffff', backOnClick: () => {
@@ -45,7 +54,7 @@ export default struct DetailPage {
           .clip(true) // 如这里不设置clip为true，则Row组件的圆角不会限制其中的Image组件，Image组件的四个角会超出Row
           .borderRadius(50)
           .onClick(ev => {
-
+            this.webviewController.scrollTo(0,0)
           })
       }
     }
