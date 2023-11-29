@@ -69,7 +69,7 @@ export function httpPost(url,params, success, error) {
     // 填写HTTP请求的URL地址，可以带参数也可以不带参数。URL地址需要开发者自定义。请求的参数可以在extraData中指定
     url,
     {
-      method: http.RequestMethod.GET, // 可选，默认为http.RequestMethod.GET
+      method: http.RequestMethod.POST, // 可选，默认为http.RequestMethod.GET
       // 开发者根据自身业务需要添加header字段
       header: {
         'Content-Type': 'application/json'
@@ -95,7 +95,7 @@ export function httpPost(url,params, success, error) {
 
       let result = JSON.parse(JSON.stringify(data.result))
       if (data.responseCode == 200 && result.errorCode === 0) {
-        success(result.data)
+        success(data.result)
       } else{
         error(result.errorMsg)
       }

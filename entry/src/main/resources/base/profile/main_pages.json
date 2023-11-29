@@ -5,6 +5,7 @@
     "pages/main/DrawLayout",
     "pages/main/PersonPage",
     "pages/DetailPage",
-    "pages/login/LoginPage"
+    "pages/login/LoginPage",
+    "pages/login/RegisterPage"
   ]
 }

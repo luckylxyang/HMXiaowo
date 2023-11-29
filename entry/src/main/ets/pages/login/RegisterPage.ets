@@ -8,7 +8,7 @@ export default struct RegisterPage {
   @State password: string = ""
   @State rePassword: string = ""
   @State clickable: boolean = false
-  @State loginBtnBg: Resource = $r('app.color.disable')
+  @State btnOpacity: number = 0.4
 
   @Builder NavigationTitle() {
     Column() {
@@ -58,7 +58,8 @@ export default struct RegisterPage {
           .width('100%')
           .height(45)
           .touchable(this.clickable)
-          .backgroundColor(this.loginBtnBg)
+          .opacity(this.btnOpacity)
+          .backgroundColor($r('app.color.blue'))
           .margin({ top: 20, bottom: 20 })
 
       }.width('90%')
@@ -74,7 +75,7 @@ export default struct RegisterPage {
    */
   checkInput() {
     this.clickable = !(this.loginName == "" || this.password == "" || this.rePassword == "")
-    this.loginBtnBg = this.clickable ? $r('app.color.disable') : $r('app.color.blue')
+    this.btnOpacity = this.clickable ? 1 : 0.4
   }
 
   registerUser() {
