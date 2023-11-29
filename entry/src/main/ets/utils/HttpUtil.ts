@@ -57,7 +57,7 @@ export function httpGet(url, success, error) {
   );
 }
 
-export function httpPost(url,params, success, error) {
+export function httpPost(url : string,params, success, error) {
   // 每一个httpRequest对应一个HTTP请求任务，不可复用
   let httpRequest = http.createHttp();
   // 用于订阅HTTP响应头，此接口会比request请求先返回。可以根据业务需要订阅此消息
@@ -94,9 +94,14 @@ export function httpPost(url,params, success, error) {
       console.info('cookies:' + JSON.stringify(data.cookies)); // 8+
 
       let result = JSON.parse(JSON.stringify(data.result))
+      if(url.concat("login")){
+        success(data.cookies)
+        return
+      }
       if (data.responseCode == 200 && result.errorCode === 0) {
         success(data.result)
       } else{
+
         error(result.errorMsg)
       }
       httpRequest.off('headersReceive');
@@ -112,3 +117,5 @@ export function httpPost(url,params, success, error) {
   }
   );
 }
+
+

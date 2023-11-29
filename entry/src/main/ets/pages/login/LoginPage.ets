@@ -3,6 +3,7 @@ import { Api } from '../net/ApiConstants'
 import Toolbar from '../Toolbar'
 import promptAction from '@ohos.promptAction'
 import router from '@ohos.router'
+import PreferencesUtil from '../../utils/PreferencesUtil';
 
 @Entry
 @Component
@@ -45,9 +46,11 @@ export default struct LoginPage {
             this.checkInput()
           })
 
-        Button($r('app.string.login'), {stateEffect : this.clickable}).onClick(ev => {
-          this.login()
-        }).width('100%')
+        Button($r('app.string.login'), { stateEffect: this.clickable })
+          .onClick(ev => {
+            this.login()
+          })
+          .width('100%')
           .height(45)
           .touchable(this.clickable)
           .opacity(this.btnOpacity)
@@ -56,7 +59,7 @@ export default struct LoginPage {
 
         Text($r('app.string.register'))
           .onClick(ev => {
-            router.pushUrl({ url: "pages/login/RegisterPage"})
+            router.pushUrl({ url: "pages/login/RegisterPage" })
           })
       }.width('90%')
       .margin({ top: 50 })
@@ -76,14 +79,19 @@ export default struct LoginPage {
 
   login() {
     let par = {
-      username : this.loginName,
-      password : this.password
+      username: this.loginName,
+      password: this.password
     }
-    httpPost(Api.baseURL + Api.user.login,par, data => {
-      promptAction.showToast({ message : "登录成功" })
-      router.pushUrl({url: "pages/main/MainPage"})
+    httpPost(Api.baseURL + Api.user.login, par, data => {
+      promptAction.showToast({ message: "登录成功" })
+      // router.pushUrl({ url: "pages/main/MainPage" })
+      this.saveCookie(data)
     }, error => {
-      promptAction.showToast({ message : error })
+      promptAction.showToast({ message: error })
     })
+  }
+
+  saveCookie(cookie) {
+    PreferencesUtil.getInstance().put("cookie", cookie)
   }
 }
