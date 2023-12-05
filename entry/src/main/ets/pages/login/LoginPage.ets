@@ -84,7 +84,7 @@ export default struct LoginPage {
     }
     httpPost(Api.baseURL + Api.user.login, par, data => {
       promptAction.showToast({ message: "登录成功" })
-      // router.pushUrl({ url: "pages/main/MainPage" })
+      router.pushUrl({ url: "pages/main/MainPage" })
       this.saveCookie(data)
     }, error => {
       promptAction.showToast({ message: error })
@@ -93,5 +93,10 @@ export default struct LoginPage {
 
   saveCookie(cookie) {
     PreferencesUtil.getInstance().put("cookie", cookie)
+      .then(()=>{
+        console.info("success")
+      }).catch(err=>{
+        console.error(err)
+    })
   }
 }

@@ -3,13 +3,13 @@ import GlobalContext from './GlobalContext';
 
 const PREFERENCES_NAME = 'wan_android'; // 首选项名字
 
+let preference = null
 export default class PreferencesUtil {
   private static instance: PreferencesUtil | null = null;
-  preference = null
 
   private constructor() {
     // 私有构造函数，防止外部直接实例化
-    this.preference = data_preferences.getPreferences(<Context> GlobalContext.getContext()
+    preference = data_preferences.getPreferences(<Context> GlobalContext.getContext()
       .getObject("abilityWant"), PREFERENCES_NAME)
   }
 
@@ -23,7 +23,7 @@ export default class PreferencesUtil {
 
   get(key) {
     return new Promise((resolve, reject) => {
-      this.preference.get(key, 'default').then(value => {
+      preference.get(key, 'default').then(value => {
         resolve(value)
       }).catch(err => {
         reject(err)
@@ -33,7 +33,7 @@ export default class PreferencesUtil {
 
   put(key, value) {
     return new Promise<void>((resolve, reject) => {
-      this.preference.put(key, value).then(() => {
+      preference.put(key, value).then(() => {
         resolve()
       }).catch(err => {
         reject(err)
@@ -41,9 +41,9 @@ export default class PreferencesUtil {
     })
   }
 
-  has(context, name, key) {
+  has( key) {
     return new Promise((resolve, reject) => {
-      this.preference.has(key).then(result => {
+      preference.has(key).then(result => {
         resolve(result)
       }).catch(err => {
         reject(err)
@@ -53,7 +53,7 @@ export default class PreferencesUtil {
 
   deleteKey(key) {
     return new Promise<void>((resolve, reject) => {
-      this.preference.delete(key).then(() => {
+      preference.delete(key).then(() => {
         resolve()
       }).catch(err => {
         reject(err)

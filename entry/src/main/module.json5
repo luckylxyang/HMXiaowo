@@ -44,6 +44,36 @@
           "when":"inuse"
         }
       },
+      {
+        "name" : "ohos.permission.LOCATION",
+        "reason": "$string:location",
+        "usedScene": {
+          "abilities": [
+            "FormAbility"
+          ],
+          "when":"always"
+        }
+      },
+      {
+        "name" : "ohos.permission.LOCATION_IN_BACKGROUND",
+        "reason": "$string:location",
+        "usedScene": {
+          "abilities": [
+            "FormAbility"
+          ],
+          "when":"always"
+        }
+      },
+      {
+        "name" : "ohos.permission.APPROXIMATELY_LOCATION",
+        "reason": "$string:location",
+        "usedScene": {
+          "abilities": [
+            "FormAbility"
+          ],
+          "when":"always"
+        }
+      }
     ]
   }
 }

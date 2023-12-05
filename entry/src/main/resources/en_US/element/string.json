@@ -47,6 +47,10 @@
     {
       "name": "re_password_placeholder",
       "value": "请再次输入密码"
+    },
+    {
+      "name": "location",
+      "value": "定位"
     }
   ]
 }
