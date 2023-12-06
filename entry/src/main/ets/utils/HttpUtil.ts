@@ -2,6 +2,7 @@
 import http from '@ohos.net.http';
 
 export function httpGet(url, success, error) {
+
   // 每一个httpRequest对应一个HTTP请求任务，不可复用
   let httpRequest = http.createHttp();
   // 用于订阅HTTP响应头，此接口会比request请求先返回。可以根据业务需要订阅此消息

@@ -70,7 +70,7 @@ export default struct MainPage {
         .tabBar(this.TabBuilder(this.Build[1]))
 
         TabContent() {
-          OfficePage()
+          ProjectPage()
             .width('100%')
             .height('100%')
         }
