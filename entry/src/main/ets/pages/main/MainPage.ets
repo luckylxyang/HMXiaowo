@@ -1,6 +1,7 @@
 import HomePage from '../home/HomePage'
 import OfficePage from '../office/OfficePage'
 import ProjectPage from '../project/ProjectPage'
+import Map from '../web/Map'
 
 @Entry
 @Component
@@ -63,7 +64,7 @@ export default struct MainPage {
         .tabBar(this.TabBuilder(this.Build[0]))
 
         TabContent() {
-          ProjectPage()
+          Map()
             .width('100%')
             .height('100%')
         }

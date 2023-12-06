@@ -13,10 +13,9 @@ export default struct CommonWeb {
   @State title: string = ""
 
   aboutToAppear() {
-    let params = router.getParams();
-    this.url = params['url']
-    this.title = params['title']
-    PermissionUtil.reqPermissionsFromUser(['ohos.permission.LOCATION'])
+    // let params = router.getParams();
+    // this.url = params['url']
+    // this.title = params['title']
   }
 
   build() {

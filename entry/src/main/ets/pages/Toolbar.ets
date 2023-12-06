@@ -3,7 +3,7 @@ import router from '@ohos.router';
 @Preview
 @Component
 export default struct Toolbar {
-  @Link title: string
+  title: string
   @State bgColor: string = '#FFFFFF'
   private backOnClick: () => void
 
