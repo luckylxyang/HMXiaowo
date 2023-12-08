@@ -58,27 +58,36 @@ const PermissionUtil = {
    * 申请权限
    * @param permissions
    */
-  reqPermissionsFromUser(permissions: Array<Permissions>): void {
+  reqPermissionsFromUser(permissions: Array<Permissions>): Promise<[boolean, Array<Permissions>, Array<Permissions>]> {
     console.info("开始授权")
     let context = getContext(this) as common.UIAbilityContext;
     let atManager = abilityAccessCtrl.createAtManager();
     // requestPermissionsFromUser会判断权限的授权状态来决定是否唤起弹窗
-    atManager.requestPermissionsFromUser(context, permissions).then((data) => {
-      let grantStatus: Array<number> = data.authResults;
-      let length: number = grantStatus.length;
-      for (let i = 0; i < length; i++) {
-        if (grantStatus[i] === 0) {
-          // 用户授权，可以继续访问目标操作
-          console.info("授权成功")
-        } else {
-          // 用户拒绝授权，提示用户必须授权才能访问当前页面的功能，并引导用户到系统设置中打开相应的权限
-          console.info("授权拒绝")
-          return;
+    return new Promise((resolve, reject) =>{
+      atManager.requestPermissionsFromUser(context, permissions).then((data) => {
+        let grantStatus: Array<number> = data.authResults;
+        let length: number = grantStatus.length;
+        let allAgree = false;
+        let agreePermission = []
+        let refusePermission = []
+        for (let i = 0; i < length; i++) {
+          if (grantStatus[i] === 0) {
+            // 用户授权，可以继续访问目标操作
+            agreePermission.push(permissions[i])
+          } else {
+            // 用户拒绝授权，提示用户必须授权才能访问当前页面的功能，并引导用户到系统设置中打开相应的权限
+            refusePermission.push(permissions[i])
+          }
         }
-      }
-      // 授权成功
-    }).catch((err) => {
-      console.error(`requestPermissionsFromUser failed, code is ${err.code}, message is ${err.message}`);
+
+        if (agreePermission.length == permissions.length) {
+          allAgree = true
+        }
+        resolve([allAgree, agreePermission, refusePermission])
+
+      }).catch((err) => {
+        resolve(err)
+      })
     })
   }
 }

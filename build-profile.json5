@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:\\Users\\lxy\\.ohos\\config\\auto_debug_HMXiaowo_com.dist.hmxiaowo_70086000220455074.cer",
-          "storePassword": "0000001B30F9720B3958D83CA858C231179B7274704F76BC40206BD6A9F50B625FC8F4E158B18A75E38EB7",
+          "certpath": "C:\\Users\\huawei\\.ohos\\config\\auto_debug_HMXiaowo_com.dist.hmxiaowo_70086000220455074.cer",
+          "storePassword": "0000001B8986B0D90E4B74D70F329EEE3A5C7CBC5950A50CAA87956CA54C6211CDA48977B53C5198620B17",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B7C1544CA8FAD49FDD1872521F78B6F6CDE65BDD9E0AAEEAFFD451B9992F232FB57D95DDCE83722",
-          "profile": "C:\\Users\\lxy\\.ohos\\config\\auto_debug_HMXiaowo_com.dist.hmxiaowo_70086000220455074.p7b",
+          "keyPassword": "0000001B4ED6BEAD18F7E104CBA57ABDE635689DF30D067C109873BA21C9060EA9CC51683D8D17BC5569AB",
+          "profile": "C:\\Users\\huawei\\.ohos\\config\\auto_debug_HMXiaowo_com.dist.hmxiaowo_70086000220455074.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\lxy\\.ohos\\config\\auto_debug_HMXiaowo_com.dist.hmxiaowo_70086000220455074.p12"
+          "storeFile": "C:\\Users\\huawei\\.ohos\\config\\auto_debug_HMXiaowo_com.dist.hmxiaowo_70086000220455074.p12"
         }
       }
     ],
