@@ -1,6 +1,6 @@
 import web_webview from '@ohos.web.webview';
 import router from '@ohos.router';
-import Toolbar from '../Toolbar'
+import Toolbar from '../Component/Toolbar'
 import PermissionUtil from '../../utils/PermissionUtil';
 import LocationUtil from '../../utils/LocationUtil';
 import Jssdk from './Jssdk';
@@ -19,7 +19,7 @@ export default struct CommonWeb {
     // let params = router.getParams();
     // this.url = params['url']
     // this.title = params['title']
-    this.getLocation();
+    // this.getLocation();
   }
 
   onPageShow() {
@@ -46,14 +46,18 @@ export default struct CommonWeb {
     Column() {
       Toolbar({ title: this.title })
       Web({ src: this.url, controller: this.webviewController })
-        .onScroll(event => {
-
-        })
+        .width('100%')
+        .height('100%')
         .onAlert((event) => {
           return true
         })
-        .width('100%')
-        .height('100%')
+        .onConsole((event) => {
+          console.log('getMessage:' + event.message.getMessage())
+          console.log('getSourceId:' + event.message.getSourceId())
+          console.log('getLineNumber:' + event.message.getLineNumber())
+          console.log('getMessageLevel:' + event.message.getMessageLevel())
+          return false
+        })
     }
   }
 }

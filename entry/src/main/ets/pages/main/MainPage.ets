@@ -1,3 +1,4 @@
+import CoursePage from '../course/CoursePage'
 import HomePage from '../home/HomePage'
 import OfficePage from '../office/OfficePage'
 import ProjectPage from '../project/ProjectPage'
@@ -22,7 +23,7 @@ export default struct MainPage {
       selectIconId: $r('app.media.icon_bag_select'),
     },
     {
-      text: '体系',
+      text: '教程',
       num: 2,
       iconId: $r('app.media.person'),
       selectIconId: $r('app.media.person_select'),
@@ -71,7 +72,7 @@ export default struct MainPage {
         .tabBar(this.TabBuilder(this.Build[1]))
 
         TabContent() {
-          ProjectPage()
+          CoursePage()
             .width('100%')
             .height('100%')
         }

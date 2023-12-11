@@ -10,7 +10,7 @@ export default struct Map {
 
   aboutToAppear() {
     //
-    PermissionUtil.checkPermissions(this.permissions)
+    PermissionUtil.checkPermissions('ohos.permission.APPROXIMATELY_LOCATION')
       .then(data => {
         promptAction.showToast({ message: "授权成功" })
       }).catch(err => {

@@ -32,6 +32,7 @@ export function httpGet(url, success, error) {
     }, (err, data) => {
     if (!err) {
       // data.result为HTTP响应内容，可根据业务需要进行解析
+      console.info('Url:' + url);
       console.info('Result:' + JSON.stringify(data.result));
       console.info('code:' + JSON.stringify(data.responseCode));
       // data.header为HTTP响应头，可根据业务需要进行解析
@@ -88,6 +89,7 @@ export function httpPost(url : string,params, success, error) {
     }, (err, data) => {
     if (!err) {
       // data.result为HTTP响应内容，可根据业务需要进行解析
+      console.info('Url:' + url);
       console.info('Result:' + JSON.stringify(data.result));
       console.info('code:' + JSON.stringify(data.responseCode));
       // data.header为HTTP响应头，可根据业务需要进行解析

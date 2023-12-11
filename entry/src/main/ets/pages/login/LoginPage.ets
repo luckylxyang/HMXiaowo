@@ -1,6 +1,6 @@
 import { httpPost } from '../../utils/HttpUtil'
 import { Api } from '../net/ApiConstants'
-import Toolbar from '../Toolbar'
+import Toolbar from '../Component/Toolbar'
 import promptAction from '@ohos.promptAction'
 import router from '@ohos.router'
 import PreferencesUtil from '../../utils/PreferencesUtil';
@@ -84,7 +84,7 @@ export default struct LoginPage {
     }
     httpPost(Api.baseURL + Api.user.login, par, data => {
       promptAction.showToast({ message: "登录成功" })
-      router.pushUrl({ url: "pages/main/MainPage" })
+      router.replaceUrl({ url: "pages/main/MainPage" })
       this.saveCookie(data)
     }, error => {
       promptAction.showToast({ message: error })

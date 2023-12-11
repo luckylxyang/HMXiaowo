@@ -40,15 +40,15 @@ const PermissionUtil = {
    * @param permiss
    * @returns
    */
-  checkPermissions(permissions: Array<Permissions>): Promise<void> {
+  checkPermissions(permissions: Permissions): Promise<void> {
     return new Promise((resolve, reject) => {
-      let grantStatus: abilityAccessCtrl.GrantStatus = this.checkAccessToken(permissions[0]);
+      let grantStatus: abilityAccessCtrl.GrantStatus = this.checkAccessToken(permissions);
 
       if (grantStatus === abilityAccessCtrl.GrantStatus.PERMISSION_GRANTED) {
         // 已经授权，可以继续访问目标操作
         resolve()
       } else {
-        // 申请日历权限
+        // 未授权或拒绝授权
         reject()
       }
     })

@@ -1,6 +1,6 @@
 import web_webview from '@ohos.web.webview';
 import router from '@ohos.router';
-import Toolbar from './Toolbar';
+import Toolbar from './Component/Toolbar';
 
 @Entry
 @Component
