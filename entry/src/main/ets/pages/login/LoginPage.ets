@@ -9,10 +9,25 @@ import PreferencesUtil from '../../utils/PreferencesUtil';
 @Component
 @Preview
 export default struct LoginPage {
-  @State loginName: string = "请你喝娃哈哈"
-  @State password: string = "lxy123456"
+  @State loginName: string = ""
+  @State password: string = ""
   @State clickable: boolean = false
   @State btnOpacity: number = 0.4
+
+  aboutToAppear(){
+    PreferencesUtil.getInstance().get("password")
+      .then((data)=>{
+        this.password = <string>data
+      }).catch(err=>{
+      console.error(err)
+    })
+    PreferencesUtil.getInstance().get("loginName")
+      .then((data)=>{
+        this.loginName = <string>data
+      }).catch(err=>{
+      console.error(err)
+    })
+  }
 
   @Builder NavigationTitle() {
     Column() {
@@ -93,6 +108,24 @@ export default struct LoginPage {
 
   saveCookie(cookie) {
     PreferencesUtil.getInstance().put("cookie", cookie)
+      .then(()=>{
+        console.info("success")
+      }).catch(err=>{
+        console.error(err)
+    })
+    PreferencesUtil.getInstance().put("loginName", this.loginName)
+      .then(()=>{
+        console.info("success")
+      }).catch(err=>{
+        console.error(err)
+    })
+    PreferencesUtil.getInstance().put("password", this.password)
+      .then(()=>{
+        console.info("success")
+      }).catch(err=>{
+        console.error(err)
+    })
+    PreferencesUtil.getInstance().flush()
       .then(()=>{
         console.info("success")
       }).catch(err=>{

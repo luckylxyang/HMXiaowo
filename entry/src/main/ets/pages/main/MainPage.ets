@@ -1,3 +1,4 @@
+import PreferencesUtil from '../../utils/PreferencesUtil'
 import CoursePage from '../course/CoursePage'
 import HomePage from '../home/HomePage'
 import OfficePage from '../office/OfficePage'
@@ -41,6 +42,10 @@ export default struct MainPage {
       selectIconId: $r('app.media.person_select'),
     }
   ]
+
+  aboutToAppear(){
+
+  }
 
   @Builder TabBuilder(item: any) {
     Column() {

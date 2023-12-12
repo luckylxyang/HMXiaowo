@@ -9,8 +9,8 @@ export default class PreferencesUtil {
 
   private constructor() {
     // 私有构造函数，防止外部直接实例化
-    preference = data_preferences.getPreferences(<Context> GlobalContext.getContext()
-      .getObject("abilityWant"), PREFERENCES_NAME)
+    preference = GlobalContext.getContext()
+      .getObject("preferences")
   }
 
   static getInstance(): PreferencesUtil {
@@ -21,9 +21,9 @@ export default class PreferencesUtil {
     return PreferencesUtil.instance;
   }
 
-  get(key) {
+  get(key, defaultValue?) {
     return new Promise((resolve, reject) => {
-      preference.get(key, 'default').then(value => {
+      preference.get(key, defaultValue ? defaultValue : "").then(value => {
         resolve(value)
       }).catch(err => {
         reject(err)
@@ -54,6 +54,16 @@ export default class PreferencesUtil {
   deleteKey(key) {
     return new Promise<void>((resolve, reject) => {
       preference.delete(key).then(() => {
+        resolve()
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  }
+
+  flush() {
+    return new Promise<void>((resolve, reject) => {
+      preference.flush().then(() => {
         resolve()
       }).catch(err => {
         reject(err)

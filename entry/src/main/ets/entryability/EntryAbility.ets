@@ -2,10 +2,22 @@ import UIAbility from '@ohos.app.ability.UIAbility';
 import hilog from '@ohos.hilog';
 import window from '@ohos.window';
 import GlobalContext from '../utils/GlobalContext';
+import dataPreferences from '@ohos.data.preferences';
+import PreferencesUtil from '../utils/PreferencesUtil';
 
 export default class EntryAbility extends UIAbility {
   onCreate(want, launchParam) {
     GlobalContext.getContext().setObject('abilityWant', this.context);
+    dataPreferences.getPreferences(this.context, 'wan_android', (err, preferences) => {
+      if (err) {
+        console.error(`Failed to get preferences. Code:${err.code},message:${err.message}`);
+        return;
+      }
+      GlobalContext.getContext().setObject('preferences', preferences);
+      console.info('Succeeded in getting preferences.');
+      // 进行相关数据操作
+    })
+    GlobalContext.getContext().setObject('context', this.context);
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
   }
 
