@@ -1,7 +1,7 @@
 import hilog from '@ohos.hilog'
 import router from '@ohos.router'
 import { httpGet } from '../../utils/HttpUtil'
-import Article from '../Article'
+import Article from '../entity/Article'
 import CommonList from '../Component/CommonList'
 import Toolbar from '../Component/Toolbar'
 import { Api } from '../net/ApiConstants'
@@ -19,7 +19,7 @@ export default struct CourseCataloguePage {
   }
 
   getData() {
-    httpGet(Api.baseURL + `article/list/${this.pageIndex}/json?cid=${this.course.id}&order_type=1`, (data: any) => {
+    httpGet(`article/list/${this.pageIndex}/json?cid=${this.course.id}&order_type=1`, (data: any) => {
       let od: Article[] = data.datas.map((it: any) => new Article(it))
       if (this.pageIndex == 0) {
         this.data = od

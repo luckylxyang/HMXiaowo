@@ -1,28 +1,27 @@
 // 引入包名
 import http from '@ohos.net.http';
+import { Api } from '../pages/net/ApiConstants';
+import PreferencesUtil from './PreferencesUtil';
 
 export function httpGet(url, success, error) {
-
-  // 每一个httpRequest对应一个HTTP请求任务，不可复用
+  url = getUrl(url)
   let httpRequest = http.createHttp();
-  // 用于订阅HTTP响应头，此接口会比request请求先返回。可以根据业务需要订阅此消息
-  // 从API 8开始，使用on('headersReceive', Callback)替代on('headerReceive', AsyncCallback)。 8+
   httpRequest.on('headersReceive', (header) => {
     console.info('header: ' + JSON.stringify(header));
   });
+  let cookie = ""
+  PreferencesUtil.getInstance().get("cookie")
+    .then(data => {
+      cookie = <string> data
+    })
   httpRequest.request(
-    // 填写HTTP请求的URL地址，可以带参数也可以不带参数。URL地址需要开发者自定义。请求的参数可以在extraData中指定
     url,
     {
       method: http.RequestMethod.GET, // 可选，默认为http.RequestMethod.GET
-      // 开发者根据自身业务需要添加header字段
       header: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Cookie': cookie
       },
-      // 当使用POST请求时此字段用于传递内容
-      // extraData: {
-      //   "data": "data to send",
-      // },
       expectDataType: http.HttpDataType.OBJECT, // 可选，指定返回数据的类型
       usingCache: true, // 可选，默认为true
       priority: 1, // 可选，默认为1
@@ -42,7 +41,7 @@ export function httpGet(url, success, error) {
       let result = JSON.parse(JSON.stringify(data.result))
       if (data.responseCode == 200 && result.errorCode === 0) {
         success(result.data)
-      } else{
+      } else {
         error(result.errorMsg)
       }
       httpRequest.off('headersReceive');
@@ -50,6 +49,7 @@ export function httpGet(url, success, error) {
       httpRequest.destroy();
     } else {
       console.info('error:' + JSON.stringify(err));
+      error(err)
       // 取消订阅HTTP响应头事件
       httpRequest.off('headersReceive');
       // 当该请求使用完毕时，调用destroy方法主动销毁
@@ -59,32 +59,25 @@ export function httpGet(url, success, error) {
   );
 }
 
-export function httpPost(url : string,params, success, error) {
-  // 每一个httpRequest对应一个HTTP请求任务，不可复用
+export function httpPost(url: string, params, success, error?) {
+  let cookie = ""
+  PreferencesUtil.getInstance().get("cookie")
+    .then(data => {
+      cookie = <string> data
+    })
+  url = getUrl(url)
   let httpRequest = http.createHttp();
-  // 用于订阅HTTP响应头，此接口会比request请求先返回。可以根据业务需要订阅此消息
-  // 从API 8开始，使用on('headersReceive', Callback)替代on('headerReceive', AsyncCallback)。 8+
-  httpRequest.on('headersReceive', (header) => {
-    console.info('header: ' + JSON.stringify(header));
-  });
+
   httpRequest.request(
-    // 填写HTTP请求的URL地址，可以带参数也可以不带参数。URL地址需要开发者自定义。请求的参数可以在extraData中指定
     url,
     {
       method: http.RequestMethod.POST, // 可选，默认为http.RequestMethod.GET
-      // 开发者根据自身业务需要添加header字段
       header: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Cookie': cookie
       },
-      // 当使用POST请求时此字段用于传递内容
-      extraData: {
-        "data": params,
-      },
+      extraData: params,
       expectDataType: http.HttpDataType.OBJECT, // 可选，指定返回数据的类型
-      usingCache: true, // 可选，默认为true
-      priority: 1, // 可选，默认为1
-      connectTimeout: 60000, // 可选，默认为60000ms
-      readTimeout: 60000, // 可选，默认为60000ms
       usingProtocol: http.HttpProtocol.HTTP1_1, // 可选，协议类型默认值由系统自动指定
     }, (err, data) => {
     if (!err) {
@@ -97,14 +90,12 @@ export function httpPost(url : string,params, success, error) {
       console.info('cookies:' + JSON.stringify(data.cookies)); // 8+
 
       let result = JSON.parse(JSON.stringify(data.result))
-      if(url.concat("login")){
-        success(data.cookies)
-        return
+      if (url.includes("login")) {
+        saveCookie(data.cookies)
       }
       if (data.responseCode == 200 && result.errorCode === 0) {
         success(data.result)
-      } else{
-
+      } else {
         error(result.errorMsg)
       }
       httpRequest.off('headersReceive');
@@ -112,6 +103,7 @@ export function httpPost(url : string,params, success, error) {
       httpRequest.destroy();
     } else {
       console.info('error:' + JSON.stringify(err));
+      error(err)
       // 取消订阅HTTP响应头事件
       httpRequest.off('headersReceive');
       // 当该请求使用完毕时，调用destroy方法主动销毁
@@ -119,6 +111,23 @@ export function httpPost(url : string,params, success, error) {
     }
   }
   );
+}
+
+function getUrl(url: string) {
+  if (url.startsWith("http")) {
+    return url;
+  }
+  return Api.baseURL + url
+}
+
+function saveCookie(cookies) {
+  PreferencesUtil.getInstance().put("cookie", cookies)
+    .then(() => {
+      console.info("success")
+    }).catch(err => {
+    console.error(err)
+  })
+  PreferencesUtil.getInstance().flush()
 }
 
 

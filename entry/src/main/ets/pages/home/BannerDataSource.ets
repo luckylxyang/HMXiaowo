@@ -1,6 +1,6 @@
 import List from '@ohos.util.List'
 import ArrayList from '@ohos.util.ArrayList'
-import Banner from './Banner'
+import Banner from '../entity/Banner'
 
 export default class BannerDataSource implements IDataSource {
   private list: Object[] = []

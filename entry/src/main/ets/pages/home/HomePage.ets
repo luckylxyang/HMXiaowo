@@ -1,8 +1,8 @@
 import BannerDataSource from './BannerDataSource'
-import { httpGet } from '../../utils/HttpUtil'
+import { httpGet, httpPost } from '../../utils/HttpUtil'
 import axios from '../../utils/axios'
-import Banner from './Banner'
-import Article from '../Article'
+import Banner from '../entity/Banner'
+import Article from '../entity/Article'
 import { dateFormat } from '../../utils/CommonUtils'
 import router from '@ohos.router';
 import promptAction from '@ohos.promptAction'
@@ -21,7 +21,7 @@ export default struct HomePage {
   }
 
   getBanner() {
-    let url = 'https://www.wanandroid.com/banner/json'
+    let url = 'banner/json'
     let _ = this
     httpGet(url, (data: any) => {
       _.banners.addData(data)
@@ -31,7 +31,7 @@ export default struct HomePage {
   }
 
   getHomeArticle(pageIndex: number) {
-    let url = `https://www.wanandroid.com/article/list/${pageIndex}/json`
+    let url = `article/list/${pageIndex}/json`
     let _ = this
     // httpGet(url, (data: any) => {
     //   let od: Article[] = data.datas.map((it: any) => new Article(it))
@@ -45,9 +45,31 @@ export default struct HomePage {
         let od: Article[] = data.datas.map((it: any) => new Article(it))
         _.articleList.push(...od)
       }).catch(err => {
-        console.error(err)
+      console.error(err)
     })
+  }
 
+  collectArticle(item: Article, index) {
+    httpPost(`lg/collect/${item.id}/json`, {}, (data: any) => {
+      promptAction.showToast({ message: "收藏成功" })
+
+      item.collect = true
+      this.articleList[index] = { ...item }
+    }, (error) => {
+      promptAction.showToast({ message: error })
+      router.pushUrl({url : 'pages/login/LoginPage'})
+    })
+  }
+
+  unCollectArticle(item: Article, index) {
+    httpPost(`lg/uncollect_originId/${item.id}/json`, "", (data: any) => {
+      promptAction.showToast({ message: "取消收藏成功" })
+      item.collect = false
+      this.articleList[index] = { ...item }
+    }, (error) => {
+      promptAction.showToast({ message: error })
+      router.pushUrl({url : 'pages/login/LoginPage'})
+    })
   }
 
   build() {
@@ -85,13 +107,16 @@ export default struct HomePage {
                 .height(24)
                 .margin(12)
                 .onClick(ev => {
-                  item.collect = !item.collect
-                  this.articleList[index] = {...item}
+                  if (item.collect) {
+                    this.unCollectArticle(item, index)
+                  } else {
+                    this.collectArticle(item, index)
+                  }
                 })
               Column() {
                 Text(item.title)
                   .fontSize(18)
-                  .textOverflow({ overflow: TextOverflow.Ellipsis})
+                  .textOverflow({ overflow: TextOverflow.Ellipsis })
                   .width('90%')
                   .maxLines(1)
                   .margin({ bottom: 12 })
@@ -106,7 +131,7 @@ export default struct HomePage {
             }
             .width('100%')
             .backgroundColor('#FFFFFF')
-            .padding({top: 8, bottom: 8})
+            .padding({ top: 8, bottom: 8 })
             .onClick((event) => {
               router.pushUrl({
                 url: 'pages/DetailPage', // 目标url

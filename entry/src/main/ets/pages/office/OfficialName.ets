@@ -1,5 +1,5 @@
 
-import Article from '../Article';
+import Article from '../entity/Article';
 export class OfficialName {
   articleList: Article[]; // 根据实际情况定义 articleList 的类型
   author: string;

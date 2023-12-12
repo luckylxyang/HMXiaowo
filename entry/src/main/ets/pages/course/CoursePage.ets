@@ -2,7 +2,7 @@ import hilog from '@ohos.hilog'
 import router from '@ohos.router'
 import axios from '../../utils/axios'
 import { httpGet } from '../../utils/HttpUtil'
-import Article from '../Article'
+import Article from '../entity/Article'
 import CommonList from '../Component/CommonList'
 import { Api } from '../net/ApiConstants'
 
@@ -15,7 +15,7 @@ export default struct CoursePage {
   }
 
   getData() {
-    httpGet(Api.baseURL + `chapter/547/sublist/json`, (data: any) => {
+    httpGet(`chapter/547/sublist/json`, (data: any) => {
       let od: Article[] = data.map((it: any) => new Article(it))
       this.data = od
     }, (error) => {

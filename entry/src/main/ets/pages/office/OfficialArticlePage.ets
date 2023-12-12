@@ -4,7 +4,7 @@ import axios from '@ohos/axios'
 import { dateFormat } from '../../utils/CommonUtils'
 import { httpGet } from '../../utils/HttpUtil'
 import LocationUtil from '../../utils/LocationUtil'
-import Article from '../Article'
+import Article from '../entity/Article'
 import BannerDataSource from '../home/BannerDataSource'
 import { Api } from '../net/ApiConstants'
 import { OfficialName } from './OfficialName'
@@ -24,7 +24,7 @@ export default struct OfficialArticlePage {
    * 获取公众号文章列表
    */
   getOfficialArticles() {
-    httpGet(Api.baseURL + `wxarticle/list/${this.officialCode}/${this.pageIndex}/json`, (data: any) => {
+    httpGet(`wxarticle/list/${this.officialCode}/${this.pageIndex}/json`, (data: any) => {
       let od: Article[] = data.datas.map((it: any) => new Article(it))
       // this.articleList.push(...od)
       this.banners.addData(od)

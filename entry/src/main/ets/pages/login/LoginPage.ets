@@ -97,7 +97,8 @@ export default struct LoginPage {
       username: this.loginName,
       password: this.password
     }
-    httpPost(Api.baseURL + Api.user.login, par, data => {
+    // + `?username=${this.loginName}&password=pass`
+    httpPost(Api.user.login + `?username=${encodeURIComponent(this.loginName)}&password=${this.password}`, {}, data => {
       promptAction.showToast({ message: "登录成功" })
       router.replaceUrl({ url: "pages/main/MainPage" })
       this.saveCookie(data)
@@ -106,13 +107,15 @@ export default struct LoginPage {
     })
   }
 
-  saveCookie(cookie) {
-    PreferencesUtil.getInstance().put("cookie", cookie)
+  saveCookie(data) {
+
+    PreferencesUtil.getInstance().put("user", JSON.stringify(data))
       .then(()=>{
         console.info("success")
       }).catch(err=>{
         console.error(err)
     })
+
     PreferencesUtil.getInstance().put("loginName", this.loginName)
       .then(()=>{
         console.info("success")
